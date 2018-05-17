@@ -1,0 +1,19 @@
+.footer{
+    bottom: 0;
+    padding: 1em;
+    background-color: #000a12;
+    color: white;
+    margin-top: 1rem;
+}
+.elementos{
+    float: right;
+}
+.redes{
+    margin-right: 30px;
+}
+a{
+    color: white;
+}
+a:hover{
+    color: pink;
+}

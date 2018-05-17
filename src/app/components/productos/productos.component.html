@@ -1,0 +1,262 @@
+<app-baner></app-baner>
+<div class="container" *ngIf="this.loading">
+	<img class="img-responsive" src="../../../assets/recursos/loader.gif" alt="">
+</div>
+<div *ngIf="!this.loading">
+<div class="container-fluid well well-sm barraProductos box">
+
+	<div class="container">
+		
+		<div class="row">
+
+			<div class="col-sm-6 col-xs-12">
+				
+				<div class="btn-group">
+					
+					 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+
+					  Ordenar Productos <span class="caret"></span></button>
+
+					  <ul class="dropdown-menu" role="menu">
+						  	<li><a style="cursor:pointer; cursor: hand;" (click)="this.modo='DESC'">Más reciente</a></li>
+              				<li><a style="cursor:pointer; cursor: hand;" (click)="this.modo='ASC'">Más antiguo</a></li>
+					  </ul>
+				</div>
+
+			</div>
+			
+			<div class="col-sm-6 col-xs-12 organizarProductos">
+
+				<div class="btn-group pull-right">
+					
+					 <button type="button" class="btn btn-default btnGrid" id="btnGrid0" (click)="this.model=1">
+					 	
+						<i class="fa fa-th" aria-hidden="true"></i>  
+
+						<span class="col-xs-0 pull-right"> Cuadricula</span>
+
+					 </button>
+
+					 <button type="button" class="btn btn-default btnList" id="btnList0" (click)="this.model=2">
+					 	
+						<i class="fa fa-list" aria-hidden="true"></i> 
+
+						<span class="col-xs-0 pull-right"> Lista</span>
+
+					 </button>
+				</div>		
+
+			</div>
+
+		</div>
+
+	</div>
+</div>
+<br>
+	<!--=====================================
+	VITRINA DE PRODUCTOS
+	======================================-->
+	
+	<div class="container-fluid productos box">
+		
+		<div class="container">
+			
+			<div class="row">
+			<!--=====================================
+			BREADCRUMB O MIGAS DE PAN
+			======================================-->
+
+			<ul class="breadcrumb fondoBreadcrumb text-uppercase">
+				
+				<li><a routerLink="/">INICIO</a></li>
+				<li class="active pagActiva">{{this.valor}}</li>
+	
+			</ul>
+			<div class="col-xs-12 error404 text-center" *ngIf="this.productos == 0">
+				<h1><small>¡Oops!</small></h1>
+				<h2>Aún no hay productos en esta sección</h2>
+			</div>
+			<!--=====================================
+			VITRINA DE PRODUCTOS EN CUADRÍCULA
+			======================================-->
+	
+			<ul class="grid0 box" *ngIf="this.productos != 0">
+				
+				<!-- Producto -->
+	
+				<li class="col-md-3 col-sm-6 col-xs-12 box" *ngFor="let modulo of productos">
+					
+					<!--===============================================-->
+		
+					<figure>
+						
+						<a routerLink="/informacion-producto/{{modulo['ruta']}}" class="pixelProducto">
+							
+							<img src="{{GLOBAL}}{{modulo['portada']}}" class="img-responsive">
+	
+						</a>
+	
+					</figure>
+	
+					<!--===============================================-->
+	
+					<h4>
+						
+						<small>
+							
+							<a routerLink="/informacion-producto/{{modulo['ruta']}}" class="pixelProducto">
+								
+								{{modulo['titulo']}}{{modulo['id']}}<br>
+								<span style="color: rgba(0, 0, 0, 0)">-</span>
+								<span class="label label-warning fontSize" *ngIf="modulo['nuevo']== 1" style="margin-right: 3px;">Nuevo</span> 
+								<span class="label label-warning fontSize" *ngIf="modulo['oferta']== 1">{{modulo['descuentoOferta']}}% off</span>
+							</a>	
+	
+						</small>			
+	
+					</h4>
+	
+					<!--===============================================-->
+					
+					<div class="col-xs-6 precio">
+						<div *ngIf="modulo['oferta'] == 1">
+							<h2>
+								<small>
+									<strong class="oferta">COP ${{modulo['precio']}}</strong>
+								</small>
+								<small> ${{modulo['precioOferta']}}</small>
+							</h2>
+						</div>
+						<div *ngIf="modulo['oferta'] == 0">
+							<h2>
+								<small>COP ${{modulo['precio']}}</small>						
+							</h2>
+						</div>	
+					</div>
+	
+					<!--===============================================-->
+	
+					<div class="col-xs-6 enlaces">
+						
+						<div class="btn-group pull-right">
+							
+							<button type="button" class="btn btn-default btn-xs deseos" id="{{modulo['portada']}}" data-toggle="tooltip" title="Agregar a mi lista de deseos">
+								
+								<i class="fa fa-heart" aria-hidden="true"></i>
+	
+							</button>
+	
+							<a routerLink="/informacion-producto/{{modulo['ruta']}}" class="pixelProducto">
+							
+								<button type="button" class="btn btn-default btn-xs" data-toggle="tooltip" title="Ver producto">
+									
+									<i class="fa fa-eye" aria-hidden="true"></i>
+	
+								</button>	
+							
+							</a>
+	
+						</div>
+	
+					</div>
+	
+				</li>
+	
+			</ul>
+	
+			<!--=====================================
+			VITRINA DE PRODUCTOS EN LISTA
+			======================================-->
+	
+			<ul class="list0 box"  style="display:none" *ngIf="this.productos != 0">
+				
+				<!-- PRODUCTO -->
+				<li class="col-xs-12" *ngFor="let modulo of productos">
+					
+					<!--===============================================-->
+					<div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
+					<figure>
+						
+						<a routerLink="/informacion-producto/{{modulo['ruta']}}" class="pixelProducto">
+							
+							<img src="{{GLOBAL}}{{modulo['portada']}}" class="img-responsive">
+	
+						</a>
+	
+					</figure>
+					</div>
+
+					<!--===============================================-->
+	
+					<div class="col-lg-10 col-md-7 col-sm-8 col-xs-12">
+						
+						<h1>
+							<small>
+								<a routerLink="/informacion-producto/{{modulo['ruta']}}" class="pixelProducto">
+									{{modulo['titulo']}}
+								</a>
+							</small>
+						</h1>
+						<p class="text-muted">
+								{{modulo['titular']}}
+						</p>	
+							<div *ngIf="modulo['oferta'] == 1">
+								<h2>
+									<small>
+										<strong class="oferta">COP ${{modulo['precio']}}</strong>
+									</small>
+									<small> ${{modulo['precioOferta']}}</small>
+								</h2>
+							</div>
+							<div *ngIf="modulo['oferta'] == 0">
+								<h2>
+									<small>COP ${{modulo['precio']}}</small>						
+								</h2>
+							</div>
+							<h2>
+									<span style="color: rgba(0, 0, 0, 0)">-</span>
+									<span class="label label-warning fontSize" *ngIf="modulo['nuevo']== 1" style="margin-right: 3px;">Nuevo</span> 
+									<span class="label label-warning fontSize" *ngIf="modulo['oferta']== 1">{{modulo['descuentoOferta']}}% off</span>
+							</h2>
+						<div class="btn-group pull-left enlaces">
+								  
+							<button type="button" class="btn btn-default btn-xs deseos"  id="{{modulo['id']}}" data-toggle="tooltip" title="Agregar a mi lista de deseos">
+	
+								<i class="fa fa-heart" aria-hidden="true"></i>
+	
+							</button>
+	
+							<a routerLink="/informacion-producto/{{modulo['ruta']}}" class="pixelProducto">
+					
+								<button type="button" class="btn btn-default btn-xs" data-toggle="tooltip" title="Ver producto">
+	
+									  <i class="fa fa-eye" aria-hidden="true"></i>
+	
+								</button>
+	
+							</a>
+	
+						</div>
+	
+					</div>
+	
+					<!--===============================================-->
+	
+					<div class="col-xs-12">
+	
+						<hr>
+	
+					</div>
+	
+					<!--===============================================-->
+	
+				</li>
+	
+			</ul>
+			<div class="col-xs-12 center-block" *ngIf="this.coleccion > 1">
+					<ngb-pagination  [collectionSize]="this.coleccion * 10" [(page)]="page"   [maxSize]="4" [rotate]="true" [boundaryLinks]="true"></ngb-pagination>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
